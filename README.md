@@ -1,3 +1,35 @@
+# Log Anomaly Detection
+
+Anomaly detection system for HDFS system logs — from log parsing to deep learning.
+
+## Dataset
+- **Source:** HDFS logs from [Loghub](https://github.com/logpai/loghub) (Hadoop Distributed File System)
+- **Size:** 11,175,629 log lines, 575,061 blocks
+- **Labels:** 558,223 Normal, 16,838 Anomaly (2.9%)
+- **Origin:** Real production logs from UC Berkeley Hadoop cluster
+
+## Project Stages
+
+| Stage | Method | Status |
+|-------|--------|--------|
+| 1 | Log Parsing — Drain3 | ✅ Done |
+| 2 | Feature Analysis & Engineering | ✅ Done |
+| 3 | Baseline — Isolation Forest (F1=0.75) | ✅ Done |
+| 4 | DeepLog (LSTM) | ⏳ Pending |
+| 5 | LogBERT | ⏳ Pending |
+| 6 | LLM-based detection (Claude API) | ⏳ Pending |
+
+## Stage 1 — Log Parsing (Drain3)
+
+Parsed 11.2M raw log lines into 55 structured templates using Drain3.
+
+**Example:**
+ID  1 | Count:  311 | Template: <*> <*> <*> INFO dfs.DataNode$PacketResponder: PacketResponder <*> for block <*> terminating
+ID  2 | Count:  314 | Template: <*> <*> <*> INFO dfs.FSNamesystem: BLOCK* NameSystem.addStoredBlock: blockMap updated: <*> is added to <*> size <*>
+ID  3 | Count:  292 | Template: <*> <*> <*> INFO dfs.DataNode$PacketResponder: Received block <*> of size <*> from <*>
+ID  4 | Count:  292 | Template: <*> <*> <*> INFO dfs.DataNode$DataXceiver: Receiving block <*> src: <*> dest: <*>
+ID  5 | Count:    8 | Template: 081109 <*> <*> INFO dfs.FSNamesystem: BLOCK* NameSystem.allocateBlock: <*> <*>
+
 
 Each log line gets a `template_id` — reducing millions of unique messages to 55 patterns.
 
@@ -7,6 +39,9 @@ Each log line gets a `template_id` — reducing millions of unique messages to 5
 - **Normal blocks:** very consistent, almost always 19-20 lines (std=4.8)
 - **Anomaly blocks:** high variance, 2-284 lines (std=12.4)
 - Blocks with **<10 lines are almost always anomalies** — incomplete lifecycle
+
+<img width="1252" height="616" alt="image" src="https://github.com/user-attachments/assets/7a3faa4d-2979-476f-a971-4a3215cd93d8" />
+
 
 ### Template analysis
 - **28 templates appear ONLY in anomaly blocks**, never in normal

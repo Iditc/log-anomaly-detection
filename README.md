@@ -60,6 +60,9 @@ Each log line gets a `template_id` — reducing millions of unique messages to 5
 - `t_8` ↔ `t_9`: 100% correlation
 - Dropped 9 redundant templates: 55 → 46 useful templates
 
+  <img width="818" height="653" alt="image" src="https://github.com/user-attachments/assets/e0eaa68b-4fca-4398-b1d7-88033a5ddb98" />
+
+
 ### Negative correlation
 - `t_35/t_36` vs `t_48/t_49`: correlation ~ -0.8 (when one goes up, the other goes down)
 
@@ -69,6 +72,9 @@ Each log line gets a `template_id` — reducing millions of unique messages to 5
 Selected 18 templates as individual features after removing:
 - 9 redundant templates (correlation >0.9)
 - 28 rare templates (appear in <0.1% of blocks) — captured by `anomaly_only_count`
+
+<img width="1248" height="610" alt="image" src="https://github.com/user-attachments/assets/b3322140-c0a9-4d8a-b17e-f6ba66e9b5d7" />
+
 
 ### Engineered features (8)
 

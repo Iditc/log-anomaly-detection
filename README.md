@@ -223,3 +223,16 @@ Sent raw log lines directly to Claude Haiku with no training, no features, no la
 ## Environment
 - Google Colab (T4 GPU)
 - Google Drive for data storage
+
+## Benchmark Comparison
+
+Our Random Forest (F1=0.9998) achieves state-of-the-art results on the HDFS dataset, outperforming most published benchmarks:
+
+| Source | Method | F1 |
+|--------|--------|-----|
+| **This project** | **Random Forest + 26 engineered features** | **0.9998** |
+| ROEAD (2024) | Supervised ensemble | 0.985 |
+| Comparative study (2024) | Random Forest | 0.97 |
+| LogLead (2023) | Drain + Random Forest | 0.86–0.95 |
+
+The key differentiator is domain-driven feature engineering — most studies use raw template counts, while our 8 engineered features (lifecycle completeness, error flags, suspicious template detection) capture the actual anomaly signals in HDFS logs.
